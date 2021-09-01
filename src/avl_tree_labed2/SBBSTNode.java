@@ -15,7 +15,6 @@ public class SBBSTNode {
     int data;
     int height;
 
-    /* Constructor */
     public SBBSTNode() {
         left = null;
         right = null;
@@ -23,14 +22,21 @@ public class SBBSTNode {
         height = 0;
     }
 
-    /* Constructor */
     public SBBSTNode(int n) {
         left = null;
         right = null;
         data = n;
         height = 0;
     }
-        public int full_nodes(SBBSTNode node) {
+
+    /**
+     * 
+     * This funtion count all the full nodes of the tree
+     * 
+     * @param node
+     * 
+     */
+    public int full_nodes(SBBSTNode node) {
 
         if (node == null) {
             return 0;
@@ -42,5 +48,5 @@ public class SBBSTNode {
         }
 
     }
-    
+
 }

@@ -5,7 +5,7 @@
  */
 package avl_tree_labed2;
 
-import avl_tree_labed2.VentanaAnimacion;
+//import avl_tree_labed2.VentanaAnimacion;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,12 +17,11 @@ public class SelfBalancingBinarySearchTree {
 
     private SBBSTNode root;
 
-    /* Constructor */
     public SelfBalancingBinarySearchTree() {
         root = null;
     }
 
-    /* Function to check if tree is empty */
+    /* This funtion check if tree is empty */
     public boolean isEmpty() {
         return root == null;
     }
@@ -31,21 +30,37 @@ public class SelfBalancingBinarySearchTree {
         return root;
     }
 
-    /* Make the tree logically empty */
+    /* Clear the tree */
     public void clear() {
         root = null;
     }
 
-    /* Function to insert data */
+    /**
+     * This funtion insert the new data in the tree
+     * 
+     * @param data
+     */
     public void insert(int data) {
         root = insert(data, root);
     }
-    
-    public void delete(int data){
+
+    /**
+     * 
+     * Delete a specific data from the tree
+     * 
+     * @param data
+     */
+    public void delete(int data) {
         root = deleteNode(root, data);
     }
 
-    /* Function to get height of node */
+    /**
+     * 
+     * Get height of the tree
+     * 
+     * @param t
+     * 
+     */
     private int height(SBBSTNode t) {
         return t == null ? -1 : t.height;
     }
@@ -55,7 +70,6 @@ public class SelfBalancingBinarySearchTree {
         return lhs > rhs ? lhs : rhs;
     }
 
-    /* Function to insert data recursively */
     private SBBSTNode insert(int x, SBBSTNode t) {
         if (t == null) {
             t = new SBBSTNode(x);
@@ -78,122 +92,108 @@ public class SelfBalancingBinarySearchTree {
                 }
             }
         } else
-           ;  // Duplicate; do nothing
+            ; // Duplicate; do nothing
         t.height = max(height(t.left), height(t.right)) + 1;
         return t;
     }
 
-    SBBSTNode deleteNode(SBBSTNode root, int data)
-    {
-        // STEP 1: PERFORM STANDARD BST DELETE
+    SBBSTNode deleteNode(SBBSTNode root, int data) {
+
         if (root == null)
             return root;
- 
-        // If the key to be deleted is smaller than
-        // the root's key, then it lies in left subtree
+
+        // If the data to be deleted is smaller than
+        // the root's data, the data to delete belong to the left branch
         if (data < root.data)
             root.left = deleteNode(root.left, data);
- 
-        // If the key to be deleted is greater than the
-        // root's key, then it lies in right subtree
+
+        // If the data to be deleted is greater than the
+        // root's data, the data to delete belong to the richt branch
         else if (data > root.data)
             root.right = deleteNode(root.right, data);
- 
-        // if key is same as root's key, then this is the node
-        // to be deleted
-        else
-        {
- 
-            // node with only one child or no child
-            if ((root.left == null) || (root.right == null))
-            {
+
+        // if the root data is same as the data to be delected, is the node to be
+        // eliminated
+        else {
+
+            // Firts case: if the node have one child or not
+            if ((root.left == null) || (root.right == null)) {
                 SBBSTNode temp = null;
                 if (temp == root.left)
                     temp = root.right;
                 else
                     temp = root.left;
- 
+
                 // No child case
-                if (temp == null)
-                {
+                if (temp == null) {
                     temp = root;
                     root = null;
-                }
-                else // One child case
+                } else // One child case
                     root = temp; // Copy the contents of
-                                // the non-empty child
-            }
-            else
-            {
- 
-                // node with two children: Get the inorder
+                                 // the non-empty child
+            } else {
+
+                // Node with two childs
                 // successor (smallest in the right subtree)
                 SBBSTNode temp = minValueNode(root.right);
- 
-                // Copy the inorder successor's data to this node
+
                 root.data = temp.data;
- 
+
                 // Delete the inorder successor
                 root.right = deleteNode(root.right, temp.data);
             }
         }
- 
+
         // If the tree had only one node then return
         if (root == null)
             return root;
- 
-        // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+
+        // update the height of the current node
         root.height = max(height(root.left), height(root.right)) + 1;
- 
-        // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
-        // this node became unbalanced)
+
+        // get the balance
         int balance = getBalance(root);
- 
+
         // If this node becomes unbalanced, then there are 4 cases
         // Left Left Case
         if (balance > 1 && getBalance(root.left) >= 0)
             return rotateWithLeftChild(root);
- 
+
         // Left Right Case
-        if (balance > 1 && getBalance(root.left) < 0)
-        {
+        if (balance > 1 && getBalance(root.left) < 0) {
             root.left = rotateWithRightChild(root.left);
             return rotateWithLeftChild(root);
         }
- 
+
         // Right Right Case
         if (balance < -1 && getBalance(root.right) <= 0)
             return rotateWithRightChild(root);
- 
+
         // Right Left Case
-        if (balance < -1 && getBalance(root.right) > 0)
-        {
+        if (balance < -1 && getBalance(root.right) > 0) {
             root.right = rotateWithLeftChild(root.right);
             return rotateWithRightChild(root);
         }
- 
+
         return root;
     }
-    SBBSTNode minValueNode(SBBSTNode node)
-    {
+
+    SBBSTNode minValueNode(SBBSTNode node) {
         SBBSTNode current = node;
- 
-        /* loop down to find the leftmost leaf */
+
         while (current.left != null)
-        current = current.left;
- 
+            current = current.left;
+
         return current;
     }
-    
+
     // Get Balance factor of node N
-    int getBalance(SBBSTNode N)
-    {
+    int getBalance(SBBSTNode N) {
         if (N == null)
             return 0;
         return height(N.left) - height(N.right);
     }
 
-    /* Rotate binary tree node with left child */
     private SBBSTNode rotateWithLeftChild(SBBSTNode k2) {
         SBBSTNode k1 = k2.left;
         k2.left = k1.right;
@@ -203,7 +203,6 @@ public class SelfBalancingBinarySearchTree {
         return k1;
     }
 
-    /* Rotate binary tree node with right child */
     private SBBSTNode rotateWithRightChild(SBBSTNode k1) {
         SBBSTNode k2 = k1.right;
         k1.right = k2.left;
@@ -213,25 +212,23 @@ public class SelfBalancingBinarySearchTree {
         return k2;
     }
 
-    /**
-     * Double rotate binary tree node: first left child with its right child;
-     * then node k3 with new left child
-     */
     private SBBSTNode doubleWithLeftChild(SBBSTNode k3) {
         k3.left = rotateWithRightChild(k3.left);
         return rotateWithLeftChild(k3);
     }
 
-    /**
-     * Double rotate binary tree node: first right child with its left child;
-     * then node k1 with new right child
-     */
     private SBBSTNode doubleWithRightChild(SBBSTNode k1) {
         k1.right = rotateWithLeftChild(k1.right);
         return rotateWithRightChild(k1);
     }
 
-    /* Functions to search for an element */
+    /**
+     * 
+     * search an element of the tree
+     * 
+     * @param val
+     * 
+     */
     public boolean search(int val) {
         return search(root, val);
     }
@@ -254,63 +251,60 @@ public class SelfBalancingBinarySearchTree {
         return found;
     }
 
-    /* Function for inorder traversal */
     public void inorder() {
         inorder(root);
     }
 
-    private void inorder(SBBSTNode r) {
-        if (r != null) {
-            inorder(r.left);
-            VentanaAnimacion.resultado += r.data + " ";
-            inorder(r.right);
+    private void inorder(SBBSTNode node) {
+        if (node != null) {
+            inorder(node.left);
+            VentanaAnimacion.resultado += node.data + " ";
+            inorder(node.right);
         }
     }
 
-    /* Function for preorder traversal */
     public void preorder() {
         preorder(root);
     }
 
-    private void preorder(SBBSTNode r) {
-        if (r != null) {
-            VentanaAnimacion.resultado += r.data + " ";
-            preorder(r.left);
-            preorder(r.right);
+    private void preorder(SBBSTNode node) {
+        if (node != null) {
+            VentanaAnimacion.resultado += node.data + " ";
+            preorder(node.left);
+            preorder(node.right);
         }
     }
 
-    /* Function for postorder traversal */
     public void postorder() {
         postorder(root);
     }
 
-    private void postorder(SBBSTNode r) {
-        if (r != null) {
-            postorder(r.left);
-            postorder(r.right);
-            VentanaAnimacion.resultado += r.data + " ";
+    private void postorder(SBBSTNode node) {
+        if (node != null) {
+            postorder(node.left);
+            postorder(node.right);
+            VentanaAnimacion.resultado += node.data + " ";
         }
     }
 
     void PorNivelesRec() {
-        Queue<SBBSTNode> q = new LinkedList<SBBSTNode>(); //Creamos la cola
-        q.add(root);  //Se añade el primer nodo a la cola
-        PorNivelesRec(q); // Se llama al metodo y damos como parametro la cola que acabamos de crear
+        Queue<SBBSTNode> queue = new LinkedList<SBBSTNode>(); // Create an empty queue
+        queue.add(root); // Enqueue root
+        PorNivelesRec(queue); // Callback funtion
     }
 
-    void PorNivelesRec(Queue<SBBSTNode> q) {
+    void PorNivelesRec(Queue<SBBSTNode> queue) {
 
-        if (q.size() > 0) { //Condicional para controlar las llamadas recursivas
-            SBBSTNode temp = q.poll(); //Recuperamos la informacion de la cola
+        if (queue.size() > 0) {
+            SBBSTNode temp = queue.poll(); // print from of queue and remove it
             VentanaAnimacion.resultado += temp.data + " ";
-            if (temp.left != null) {//Si el hijo izquierdo NO es nulo entonces se agrega a la cola
-                q.add(temp.left);
+            if (temp.left != null) { // Enqueue left child
+                queue.add(temp.left);
             }
-            if (temp.right != null) {//Si el hijo derecho NO es nulo entonces se agrega a la cola
-                q.add(temp.right);
+            if (temp.right != null) {// Enqueue right child
+                queue.add(temp.right);
             }
-            PorNivelesRec(q); //Aqui se realiza la llamada recursiva
+            PorNivelesRec(queue); // Callback funtion
         }
     }
 }
