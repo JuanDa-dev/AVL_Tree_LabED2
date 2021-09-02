@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package avl_tree_labed2;
 
 //import avl_tree_labed2.VentanaAnimacion;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- *
- * @author Mateo
- */
 public class SelfBalancingBinarySearchTree {
 
     private SBBSTNode root;
@@ -37,7 +28,7 @@ public class SelfBalancingBinarySearchTree {
 
     /**
      * This funtion insert the new data in the tree
-     * 
+     *
      * @param data
      */
     public void insert(int data) {
@@ -45,9 +36,9 @@ public class SelfBalancingBinarySearchTree {
     }
 
     /**
-     * 
+     *
      * Delete a specific data from the tree
-     * 
+     *
      * @param data
      */
     public void delete(int data) {
@@ -55,11 +46,11 @@ public class SelfBalancingBinarySearchTree {
     }
 
     /**
-     * 
+     *
      * Get height of the tree
-     * 
+     *
      * @param t
-     * 
+     *
      */
     private int height(SBBSTNode t) {
         return t == null ? -1 : t.height;
@@ -99,38 +90,39 @@ public class SelfBalancingBinarySearchTree {
 
     SBBSTNode deleteNode(SBBSTNode root, int data) {
 
-        if (root == null)
+        if (root == null) {
             return root;
+        }
 
         // If the data to be deleted is smaller than
         // the root's data, the data to delete belong to the left branch
-        if (data < root.data)
+        if (data < root.data) {
             root.left = deleteNode(root.left, data);
-
-        // If the data to be deleted is greater than the
+        } // If the data to be deleted is greater than the
         // root's data, the data to delete belong to the richt branch
-        else if (data > root.data)
+        else if (data > root.data) {
             root.right = deleteNode(root.right, data);
-
-        // if the root data is same as the data to be delected, is the node to be
+        } // if the root data is same as the data to be delected, is the node to be
         // eliminated
         else {
 
             // Firts case: if the node have one child or not
             if ((root.left == null) || (root.right == null)) {
                 SBBSTNode temp = null;
-                if (temp == root.left)
+                if (temp == root.left) {
                     temp = root.right;
-                else
+                } else {
                     temp = root.left;
+                }
 
                 // No child case
                 if (temp == null) {
                     temp = root;
                     root = null;
                 } else // One child case
+                {
                     root = temp; // Copy the contents of
-                                 // the non-empty child
+                }                                 // the non-empty child
             } else {
 
                 // Node with two childs
@@ -145,8 +137,9 @@ public class SelfBalancingBinarySearchTree {
         }
 
         // If the tree had only one node then return
-        if (root == null)
+        if (root == null) {
             return root;
+        }
 
         // update the height of the current node
         root.height = max(height(root.left), height(root.right)) + 1;
@@ -156,8 +149,9 @@ public class SelfBalancingBinarySearchTree {
 
         // If this node becomes unbalanced, then there are 4 cases
         // Left Left Case
-        if (balance > 1 && getBalance(root.left) >= 0)
+        if (balance > 1 && getBalance(root.left) >= 0) {
             return rotateWithLeftChild(root);
+        }
 
         // Left Right Case
         if (balance > 1 && getBalance(root.left) < 0) {
@@ -166,8 +160,9 @@ public class SelfBalancingBinarySearchTree {
         }
 
         // Right Right Case
-        if (balance < -1 && getBalance(root.right) <= 0)
+        if (balance < -1 && getBalance(root.right) <= 0) {
             return rotateWithRightChild(root);
+        }
 
         // Right Left Case
         if (balance < -1 && getBalance(root.right) > 0) {
@@ -181,16 +176,18 @@ public class SelfBalancingBinarySearchTree {
     SBBSTNode minValueNode(SBBSTNode node) {
         SBBSTNode current = node;
 
-        while (current.left != null)
+        while (current.left != null) {
             current = current.left;
+        }
 
         return current;
     }
 
     // Get Balance factor of node N
     int getBalance(SBBSTNode N) {
-        if (N == null)
+        if (N == null) {
             return 0;
+        }
         return height(N.left) - height(N.right);
     }
 
@@ -223,11 +220,11 @@ public class SelfBalancingBinarySearchTree {
     }
 
     /**
-     * 
+     *
      * search an element of the tree
-     * 
+     *
      * @param val
-     * 
+     *
      */
     public boolean search(int val) {
         return search(root, val);

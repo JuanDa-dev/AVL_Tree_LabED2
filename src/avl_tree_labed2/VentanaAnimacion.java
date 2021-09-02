@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package avl_tree_labed2;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Mateo
- */
 public class VentanaAnimacion extends javax.swing.JFrame {
 
     /**
@@ -272,32 +263,32 @@ public class VentanaAnimacion extends javax.swing.JFrame {
 
     private void btninordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninordenActionPerformed
         // TODO add your handling code here:        
-            resultado = "";
-            tree.inorder();
-            resultadotxt.append("\nInorden: " + resultado);
+        resultado = "";
+        tree.inorder();
+        resultadotxt.append("\nInorden: " + resultado);
 
     }//GEN-LAST:event_btninordenActionPerformed
 
     private void btnpostordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpostordenActionPerformed
         // TODO add your handling code here:
-            resultado = "";
-            tree.postorder();
-            resultadotxt.append("\nPost orden: " + resultado);
+        resultado = "";
+        tree.postorder();
+        resultadotxt.append("\nPost orden: " + resultado);
 
     }//GEN-LAST:event_btnpostordenActionPerformed
 
     private void btnpreordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpreordenActionPerformed
         // TODO add your handling code here:
-            resultado = "";
-            tree.preorder();
-            resultadotxt.append("\nPre orden: " + resultado);
+        resultado = "";
+        tree.preorder();
+        resultadotxt.append("\nPre orden: " + resultado);
     }//GEN-LAST:event_btnpreordenActionPerformed
 
     private void btnpornivelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpornivelesActionPerformed
         // TODO add your handling code here:
-            resultado = "";
-            tree.PorNivelesRec();
-            resultadotxt.append("\nPor niveles: " + resultado);
+        resultado = "";
+        tree.PorNivelesRec();
+        resultadotxt.append("\nPor niveles: " + resultado);
     }//GEN-LAST:event_btnpornivelesActionPerformed
 
     private void txtDatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyTyped

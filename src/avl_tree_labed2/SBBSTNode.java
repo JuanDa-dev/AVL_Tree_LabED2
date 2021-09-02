@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package avl_tree_labed2;
 
-/**
- *
- * @author Mateo
- */
 public class SBBSTNode {
 
     SBBSTNode left, right;
@@ -30,11 +21,11 @@ public class SBBSTNode {
     }
 
     /**
-     * 
+     *
      * This funtion count all the full nodes of the tree
-     * 
+     *
      * @param node
-     * 
+     *
      */
     public int full_nodes(SBBSTNode node) {
 
